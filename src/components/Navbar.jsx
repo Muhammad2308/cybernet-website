@@ -94,12 +94,12 @@ export const Navbar = () => {
           <Link to="/" className="flex items-center gap-3 group">
             <div className="relative p-1 rounded-xl bg-gradient-to-br from-cyber-purple-light via-cyber-bronze-light to-amber-500 shadow-glow-purple group-hover:scale-105 transition-transform duration-300">
               <img 
-                src="/assets/cybernet_crest_logo.jpg" 
-                alt="Cybernet Crest" 
-                className="w-9 h-9 sm:w-10 sm:h-10 rounded-lg object-cover"
+                src="/assets/img/cybernet-logo-trans.png" 
+                alt="Cybernet Logo" 
+                className="w-9 h-9 sm:w-10 sm:h-10 rounded-lg object-contain"
                 onError={(e) => {
                   e.target.onerror = null;
-                  e.target.src = '/watermarked_img_9452845413472250268.jpg';
+                  e.target.src = '/assets/img/cybernet-logo-back.jpg';
                 }}
               />
             </div>

@@ -63,12 +63,12 @@ export const HeroSection = ({ onOpenPortal }) => {
               <span>ISO & NDPR CERTIFIED</span>
             </div>
             <img 
-              src="/watermarked_img_9452845413472250268.jpg" 
+              src="/assets/img/cybernet-logo-trans.png" 
               alt="Cybernet Systems Logo Seal" 
-              className="w-full h-auto rounded-2xl shadow-glow-purple animate-pulse-slow object-cover"
+              className="w-full h-auto rounded-2xl shadow-glow-purple object-contain p-4 bg-cyber-card/40"
               onError={(e) => {
                 e.target.onerror = null;
-                e.target.src = '/assets/cybernet_crest_logo.jpg';
+                e.target.src = '/assets/img/cybernet-logo-back.jpg';
               }}
             />
             <div className="mt-4 p-3 rounded-xl bg-slate-900/60 border border-cyber-border text-center text-xs font-mono text-cyber-silver">

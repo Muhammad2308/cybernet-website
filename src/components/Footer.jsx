@@ -37,12 +37,12 @@ export const Footer = () => {
             <Link to="/" className="flex items-center gap-3">
               <div className="p-1 rounded-xl bg-gradient-to-br from-cyber-purple-light to-cyber-bronze-light">
                 <img 
-                  src="/assets/cybernet_crest_logo.jpg" 
-                  alt="Cybernet Crest" 
-                  className="w-9 h-9 rounded-lg object-cover"
+                  src="/assets/img/cybernet-logo-trans.png" 
+                  alt="Cybernet Logo" 
+                  className="w-9 h-9 rounded-lg object-contain"
                   onError={(e) => {
                     e.target.onerror = null;
-                    e.target.src = '/watermarked_img_9452845413472250268.jpg';
+                    e.target.src = '/assets/img/cybernet-logo-back.jpg';
                   }}
                 />
               </div>
