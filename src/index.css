@@ -1,0 +1,70 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+  }
+}
+
+@layer utilities {
+  /* Glassmorphism helpers */
+  .glass-card {
+    background: rgba(21, 14, 37, 0.7);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(42, 27, 71, 0.6);
+  }
+  
+  .glass-card-light {
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(226, 232, 240, 0.8);
+  }
+
+  /* Text Gradients */
+  .text-gradient-purple {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-cyber-purple-light via-purple-400 to-cyber-bronze-light;
+  }
+
+  .text-gradient-gold {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-amber-300 via-amber-500 to-cyber-bronze-light;
+  }
+
+  .text-gradient-silver {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-white via-slate-200 to-slate-400;
+  }
+  
+  /* Cyber Grid Background Pattern */
+  .bg-grid-cyber {
+    background-size: 30px 30px;
+    background-image: 
+      linear-gradient(to right, rgba(74, 21, 75, 0.08) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(74, 21, 75, 0.08) 1px, transparent 1px);
+  }
+  
+  .dark .bg-grid-cyber {
+    background-size: 36px 36px;
+    background-image: 
+      linear-gradient(to right, rgba(42, 27, 71, 0.3) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(42, 27, 71, 0.3) 1px, transparent 1px);
+  }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #0B0713;
+}
+::-webkit-scrollbar-thumb {
+  background: #2A1B47;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #7939A8;
+}
