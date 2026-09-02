@@ -18,6 +18,7 @@ import {
   Terminal
 } from 'lucide-react';
 import { PortalAccessModal } from './PortalAccessModal';
+import { FadeIn, StaggerContainer, StaggerItem } from './AnimatedSection';
 
 export const SolutionDetailView = ({ solution }) => {
   const [portalOpen, setPortalOpen] = useState(false);
@@ -48,7 +49,12 @@ export const SolutionDetailView = ({ solution }) => {
         <div className="max-w-7xl mx-auto relative z-10">
           <div className="flex flex-col lg:flex-row items-center gap-12">
             
-            <div className="w-full lg:w-7/12 space-y-6 text-center lg:text-left">
+            <motion.div 
+              initial={{ opacity: 0, x: -30 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.5 }}
+              className="w-full lg:w-7/12 space-y-6 text-center lg:text-left"
+            >
               <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-cyber-purple/10 dark:bg-cyber-purple/30 border border-cyber-purple/30 text-cyber-purple dark:text-cyber-purple-light text-xs font-mono font-semibold">
                 <ShieldCheck className="w-4 h-4" />
                 <span>{solution.badge}</span>
@@ -65,7 +71,7 @@ export const SolutionDetailView = ({ solution }) => {
               <div className="flex flex-wrap items-center justify-center lg:justify-start gap-4 pt-2">
                 <button
                   onClick={() => setPortalOpen(true)}
-                  className="px-6 py-3.5 rounded-xl bg-gradient-to-r from-cyber-purple to-cyber-purple-glow text-white text-sm font-semibold flex items-center gap-2 shadow-glow-purple hover:opacity-95 transition-all cursor-pointer"
+                  className="px-6 py-3.5 rounded-xl bg-gradient-to-r from-cyber-purple to-cyber-purple-glow text-white text-sm font-semibold flex items-center gap-2 shadow-glow-purple hover:opacity-95 hover:scale-105 transition-all cursor-pointer"
                 >
                   Request Dedicated Portal Demo <ArrowRight className="w-4 h-4" />
                 </button>
@@ -73,16 +79,21 @@ export const SolutionDetailView = ({ solution }) => {
                 <button
                   onClick={runSimulation}
                   disabled={interactiveSimActive}
-                  className="px-6 py-3.5 rounded-xl border border-slate-300 dark:border-cyber-border bg-white dark:bg-cyber-card text-slate-800 dark:text-slate-200 text-sm font-semibold flex items-center gap-2 hover:bg-slate-50 dark:hover:bg-cyber-card/80 transition-all cursor-pointer"
+                  className="px-6 py-3.5 rounded-xl border border-slate-300 dark:border-cyber-border bg-white dark:bg-cyber-card text-slate-800 dark:text-slate-200 text-sm font-semibold flex items-center gap-2 hover:bg-slate-50 dark:hover:bg-cyber-card/80 hover:scale-105 transition-all cursor-pointer"
                 >
                   <Terminal className="w-4 h-4 text-cyber-bronze-light" />
                   <span>{interactiveSimActive ? 'Executing Sim...' : 'Run Telemetry Sim'}</span>
                 </button>
               </div>
-            </div>
+            </motion.div>
 
             {/* Banner Graphic Preview */}
-            <div className="w-full lg:w-5/12">
+            <motion.div 
+              initial={{ opacity: 0, scale: 0.9, x: 30 }}
+              animate={{ opacity: 1, scale: 1, x: 0 }}
+              transition={{ duration: 0.6, delay: 0.1 }}
+              className="w-full lg:w-5/12"
+            >
               <div className="relative p-3 rounded-3xl bg-gradient-to-b from-cyber-border to-transparent border border-cyber-border/80 backdrop-blur-md shadow-2xl overflow-hidden group">
                 <img 
                   src={solution.heroImage} 
@@ -97,25 +108,31 @@ export const SolutionDetailView = ({ solution }) => {
                   {solution.category}
                 </div>
               </div>
-            </div>
+            </motion.div>
 
           </div>
 
           {/* Key Metrics Row */}
-          <div className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-4">
+          <StaggerContainer className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-4" staggerChildren={0.1}>
             {solution.stats.map((st, idx) => (
-              <div key={idx} className="p-5 rounded-2xl bg-white dark:bg-cyber-card border border-slate-200 dark:border-cyber-border text-center">
-                <div className="text-2xl sm:text-3xl font-extrabold font-mono text-cyber-purple-light">{st.value}</div>
-                <div className="text-xs text-slate-500 dark:text-slate-400 font-semibold mt-1">{st.label}</div>
-              </div>
+              <StaggerItem key={idx}>
+                <div className="p-5 rounded-2xl bg-white dark:bg-cyber-card border border-slate-200 dark:border-cyber-border text-center hover:border-cyber-purple-light/50 transition-colors">
+                  <div className="text-2xl sm:text-3xl font-extrabold font-mono text-cyber-purple-light">{st.value}</div>
+                  <div className="text-xs text-slate-500 dark:text-slate-400 font-semibold mt-1">{st.label}</div>
+                </div>
+              </StaggerItem>
             ))}
-          </div>
+          </StaggerContainer>
         </div>
       </section>
 
       {/* Interactive Simulation Output Drawer */}
       {simOutput && (
-        <section className="py-6 bg-slate-900 border-b border-cyber-border text-white font-mono">
+        <motion.section 
+          initial={{ opacity: 0, height: 0 }}
+          animate={{ opacity: 1, height: 'auto' }}
+          className="py-6 bg-slate-900 border-b border-cyber-border text-white font-mono"
+        >
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between text-xs">
             <div className="flex items-center gap-3">
               <span className="px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-400 font-bold">
@@ -128,40 +145,39 @@ export const SolutionDetailView = ({ solution }) => {
               <span>HASH: {simOutput.hash}</span>
             </div>
           </div>
-        </section>
+        </motion.section>
       )}
 
       {/* 2. Key Capabilities Grid */}
       <section className="py-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
           
-          <div className="text-center max-w-3xl mx-auto space-y-3 mb-16">
+          <FadeIn className="text-center max-w-3xl mx-auto space-y-3 mb-16">
             <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight">
               Core Technical <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyber-purple-light to-cyber-bronze-light">Modules</span>
             </h2>
             <p className="text-slate-600 dark:text-slate-300 text-sm sm:text-base">
               Architected for high throughput, sub-second execution, and zero data leakage.
             </p>
-          </div>
+          </FadeIn>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" staggerChildren={0.12}>
             {solution.coreModules.map((mod) => (
-              <div 
-                key={mod.id}
-                className="p-8 rounded-3xl bg-white dark:bg-cyber-card border border-slate-200 dark:border-cyber-border shadow-xl hover:shadow-glow-purple hover:-translate-y-1 transition-all group"
-              >
-                <div className="p-3.5 rounded-2xl bg-cyber-purple/10 dark:bg-cyber-purple/30 text-cyber-purple dark:text-cyber-purple-light border border-cyber-purple/30 w-fit mb-6 group-hover:scale-110 transition-transform">
-                  <CheckCircle className="w-6 h-6" />
+              <StaggerItem key={mod.id}>
+                <div className="p-8 rounded-3xl bg-white dark:bg-cyber-card border border-slate-200 dark:border-cyber-border shadow-xl hover:shadow-glow-purple hover:-translate-y-2 transition-all duration-300 group h-full">
+                  <div className="p-3.5 rounded-2xl bg-cyber-purple/10 dark:bg-cyber-purple/30 text-cyber-purple dark:text-cyber-purple-light border border-cyber-purple/30 w-fit mb-6 group-hover:scale-110 transition-transform">
+                    <CheckCircle className="w-6 h-6" />
+                  </div>
+                  <h3 className="text-xl font-bold mb-3 group-hover:text-cyber-purple-light transition-colors">
+                    {mod.title}
+                  </h3>
+                  <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+                    {mod.desc}
+                  </p>
                 </div>
-                <h3 className="text-xl font-bold mb-3 group-hover:text-cyber-purple-light transition-colors">
-                  {mod.title}
-                </h3>
-                <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
-                  {mod.desc}
-                </p>
-              </div>
+              </StaggerItem>
             ))}
-          </div>
+          </StaggerContainer>
 
         </div>
       </section>
@@ -171,7 +187,7 @@ export const SolutionDetailView = ({ solution }) => {
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
             
-            <div className="lg:col-span-6 space-y-6">
+            <FadeIn className="lg:col-span-6 space-y-6">
               <h3 className="text-2xl sm:text-3xl font-extrabold tracking-tight">
                 System Architecture & <span className="text-cyber-purple-light">Data Sovereignty Standard</span>
               </h3>
@@ -193,9 +209,9 @@ export const SolutionDetailView = ({ solution }) => {
                   <span className="font-bold text-emerald-400">{solution.architecture.security}</span>
                 </div>
               </div>
-            </div>
+            </FadeIn>
 
-            <div className="lg:col-span-6">
+            <FadeIn delay={0.2} className="lg:col-span-6">
               <div className="p-8 rounded-3xl bg-white dark:bg-cyber-card border border-slate-200 dark:border-cyber-border shadow-xl space-y-4">
                 <h4 className="text-lg font-bold flex items-center gap-2">
                   <Layers className="w-5 h-5 text-cyber-purple-light" />
@@ -210,7 +226,7 @@ export const SolutionDetailView = ({ solution }) => {
                   ))}
                 </ul>
               </div>
-            </div>
+            </FadeIn>
 
           </div>
         </div>
@@ -218,7 +234,7 @@ export const SolutionDetailView = ({ solution }) => {
 
       {/* 4. Action & Integration Portal */}
       <section className="py-20 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-4xl mx-auto text-center space-y-8">
+        <FadeIn className="max-w-4xl mx-auto text-center space-y-8">
           <div className="p-8 sm:p-12 rounded-3xl bg-gradient-to-br from-cyber-purple/20 via-cyber-card to-cyber-dark border border-cyber-purple/40 shadow-2xl space-y-6">
             <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight">
               Deploy {solution.title} for Your Organization
@@ -228,12 +244,12 @@ export const SolutionDetailView = ({ solution }) => {
             </p>
             <button
               onClick={() => setPortalOpen(true)}
-              className="px-8 py-4 rounded-xl bg-gradient-to-r from-cyber-purple to-cyber-purple-glow text-white text-base font-semibold inline-flex items-center gap-2 shadow-glow-purple hover:opacity-95 transition-all cursor-pointer"
+              className="px-8 py-4 rounded-xl bg-gradient-to-r from-cyber-purple to-cyber-purple-glow text-white text-base font-semibold inline-flex items-center gap-2 shadow-glow-purple hover:opacity-95 hover:scale-105 transition-all cursor-pointer"
             >
               Request Access Portal Credentials <ArrowRight className="w-5 h-5" />
             </button>
           </div>
-        </div>
+        </FadeIn>
       </section>
 
       <PortalAccessModal isOpen={portalOpen} onClose={() => setPortalOpen(false)} />
